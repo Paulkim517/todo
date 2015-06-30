@@ -5,3 +5,11 @@
 .task{
 	text-align: left;
 }
+
+.alert {
+	display: none;
+}
+
+.show {
+	display: block;
+}

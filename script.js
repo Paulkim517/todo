@@ -33,6 +33,12 @@ console.log($newToDoForm)
 	var $newTD = $('<li class ="task">'+ $('#item_name').val()+ ": "+ $('#item_descript').val()+" "+$('#item_dueDate').val()+ buttons +'</li>');
   $('#to_do').append($newTD);
   taskList.push({title: $('#item_name').val(), description: $('#item_descript').val(), date: $('#item_dueDate').val()});
+  	var $newToDoForm = $("#new_to_do");
+   	//alert
+   	if (($newToDoForm  !== $('#item_name').val()) || ($newToDoForm  !== $('#item_descript').val()) || ($newToDoForm  !== $('#item_dueDate').val())) {
+        $('.alert').toggleClass('show');
+        return false;
+    };
   strikeThru();
   
 
