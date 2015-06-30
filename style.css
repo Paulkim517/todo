@@ -1,0 +1,7 @@
+.finished{
+	text-decoration: line-through;
+	color:red;
+}
+.task{
+	text-align: left;
+}
