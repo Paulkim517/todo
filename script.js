@@ -1,52 +1,84 @@
-$(function(){
+$(function() {
 
-var $newToDoForm = $("#new_to_do");
-var $currentToDoForm = $(".task")
-var buttons = '<button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Delete</button>'
-var taskList = [{title:"brush teeth",description:"until clean", date:"2016-02-09"} ,{title:"eat food",description:"until not hungry", date:"2015-07-20"}];
+  // `toDos` array is our model (holds our data)
+  // contains test (or "seed") data
+  var toDos = [
+  {task: "laundry", description: "clean clothes"},
+  {task: "grocery shopping", description: "buy food"},
+  {task: "nap time", description: "remember to sleep!"}
+  ];
+  console.log(toDos);
 
-//changes finished tasks
-function strikeThru(){
-		$currentToDoForm = $(".task")
- 		$(".btn-sm").on("click",function(event) {
- 		$(this).parent().fadeOut(950);
-		});
-}
+   // form to create new todo
+   var $newToDo = $('#new-todo');
 
-//loads hardcoded array 	
-	function displayTasks(){
-		$(taskList).each(function(i){
-		var $addTD = $("#to_do")
-		$addTD.append("<li class='task'>" + this.title + ": " + this.description + " "+ this.date  +buttons + "</li>");
-		}); 
-		strikeThru();
-};
+  // element to hold our list of todos
+  var $toDoList = $('#todo-list');
 
-	
+// underscore template
+var todoTemplate = _.template($('#todo-template').html());
+console.log(todoTemplate)
 
-console.log($newToDoForm)
+//seed data append
+_.each(toDos, function (toDos, index) {
+	var $todo = $(todoTemplate(toDos));
+	//$todo.attr('data-index', index);
+	$toDoList.append($todo);
+});
 
-	$newToDoForm.on("submit",function(event){
-	event.preventDefault();
-	
-	//displays new information from form
-	var $newTD = $('<li class ="task">'+ $('#item_name').val()+ ": "+ $('#item_descript').val()+" "+$('#item_dueDate').val()+ buttons +'</li>');
-  $('#to_do').append($newTD);
-  taskList.push({title: $('#item_name').val(), description: $('#item_descript').val(), date: $('#item_dueDate').val()});
-  	var $newToDoForm = $("#new_to_do");
-   	//alert
-   	if (($newToDoForm  !== $('#item_name').val()) || ($newToDoForm  !== $('#item_descript').val()) || ($newToDoForm  !== $('#item_dueDate').val())) {
-        $('.alert').toggleClass('show');
-        return false;
-    };
-  strikeThru();
-  
 
+  // submit form to create new todo
+  $newToDo.on('submit', function(event) {
+  	event.preventDefault();
+
+    // create new todo object from form data
+    var toDoName = $('#todo-name').val();
+    var toDoDesc = $('#todo-desc').val();
+    var toDoData = {task: toDoName, description: toDoDesc};
+
+    // store our new todo
+    toDos.push(toDoData);
+    var index = toDos.indexOf(toDoData);
+    console.log(toDos)
+
+    // append our new todo to the page
+   var $todo = $(todoTemplate(toDoData));
+	$todo.attr('data-index', index);
+	 console.log ($todo)
+	$toDoList.append($todo);
+   
+    // reset the form
+    $newToDo[0].reset();
+    $('#todo-name').focus();
+  });
+
+  // add class to todo on click to mark it as done
+  $toDoList.on('click', '.todo', function() {
+  	$(this).addClass('done');
+  });
 
 });
 
-displayTasks();
 
 
-});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

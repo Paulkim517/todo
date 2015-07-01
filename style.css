@@ -1,15 +1,8 @@
-.finished{
-	text-decoration: line-through;
-	color:red;
-}
-.task{
-	text-align: left;
+body {
+  font-size: 16px;
 }
 
-.alert {
-	display: none;
-}
-
-.show {
-	display: block;
+.todo:hover, .todo.done {
+  cursor: pointer;
+  text-decoration: line-through;
 }
